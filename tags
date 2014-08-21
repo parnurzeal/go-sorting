@@ -4,18 +4,8 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-BubbleSort	main.go	/^func (s intSlice) BubbleSort() intSlice {$/;"	d
-InsertionSort	main.go	/^func (s intSlice) InsertionSort() intSlice {$/;"	d
-MergeSort	main.go	/^func (s intSlice) MergeSort() intSlice {$/;"	d
-QuickSort	main.go	/^func (s intSlice) QuickSort() intSlice {$/;"	d
-SelectionSort	main.go	/^func (s intSlice) SelectionSort() intSlice {$/;"	d
-digitRegexp	main.go	/^var digitRegexp = regexp.MustCompile("-?[0-9]+")$/;"	d
 flipsPerLine	cpp/matrix.cpp	/^const int flipsPerLine = 5;    \/\/ No. of columns changed per line$/;"	v
-intSlice	main.go	/^type intSlice []int$/;"	d
 main	cpp/main.cpp	/^int main(void){$/;"	f
 main	cpp/matrix.cpp	/^int main() {$/;"	f
-main	main.go	/^func main() {$/;"	d
 millisecondsOfSleep	cpp/matrix.cpp	/^const int millisecondsOfSleep = 50; \/\/ Delay between lines in millisecond$/;"	v
-nums	main.go	/^	var nums intSlice$/;"	d
-swap	main.go	/^func (s intSlice) swap(a, b int) {$/;"	d
 width	cpp/matrix.cpp	/^const int width = 158;        \/\/ Width of terminal window$/;"	v
