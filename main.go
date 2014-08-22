@@ -12,6 +12,8 @@ type Interface interface {
 	Len() int
 	Less(i, j int) bool
 	Swap(i, j int)
+	Get(i int) interface{}
+	Set(i int, elem interface{})
 }
 
 func BubbleSort(data Interface) {
@@ -38,28 +40,66 @@ func SelectionSort(data Interface) {
 	}
 }
 
+func InsertionSort(data Interface) {
+	n := data.Len()
+	for i := 0; i < n; i++ {
+		for j := i; j > 0; j-- {
+			if data.Less(j, j-1) {
+				data.Swap(j, j-1)
+			}
+		}
+	}
+}
+
 func MergeSort(data Interface) {
 	n := data.Len()
 	MergeSortInternal(data, 0, n)
 }
 
 func MergeSortInternal(data Interface, f, l int) {
-	n := l - f + 1
-	if f <= l {
+	n := l - f
+	if n < 2 {
 		return
 	}
-	m := (l - f) / 2
+	m := (l-f)/2 + f
 	MergeSortInternal(data, f, m)
-	MergeSortInternal(data, m+1, l)
-	newSlice := make([]Interface, n)
-	// add more
+	MergeSortInternal(data, m, l)
+	newSlice := make([]interface{}, n)
+	s1, s2, s3 := f, m, 0
+	for s1 < m && s2 < l {
+		if data.Less(s1, s2) {
+			newSlice[s3] = data.Get(s1)
+			s1++
+			s3++
+		} else {
+			newSlice[s3] = data.Get(s2)
+			s2++
+			s3++
+		}
+	}
+	for s1 < m {
+		newSlice[s3] = data.Get(s1)
+		s3++
+		s1++
+	}
+	for s2 < l {
+		newSlice[s3] = data.Get(s2)
+		s3++
+		s2++
+	}
+	for i := 0; i < n; i++ {
+		data.Set(i+f, newSlice[i])
+	}
+	return
 }
 
 type IntSlice []int
 
-func (s IntSlice) Len() int           { return len(s) }
-func (s IntSlice) Swap(a, b int)      { s[a], s[b] = s[b], s[a] }
-func (s IntSlice) Less(a, b int) bool { return s[a] < s[b] }
+func (s IntSlice) Len() int                    { return len(s) }
+func (s IntSlice) Swap(a, b int)               { s[a], s[b] = s[b], s[a] }
+func (s IntSlice) Less(a, b int) bool          { return s[a] < s[b] }
+func (s IntSlice) Get(i int) interface{}       { return s[i] }
+func (s IntSlice) Set(i int, elem interface{}) { s[i] = elem.(int) }
 
 var digitRegexp = regexp.MustCompile("-?[0-9]+")
 
@@ -99,4 +139,13 @@ func main() {
 	fmt.Println("Selection Sort2\t", numsSelection)
 
 	fmt.Println("Insertion Sort\t", nums1.InsertionSort())
+	numsInsertion := make([]int, len(nums))
+	copy(numsInsertion, nums)
+	InsertionSort(IntSlice(numsInsertion))
+	fmt.Println("Insertion Sort2\t", numsInsertion)
+
+	numsMerge := make([]int, len(nums))
+	copy(numsMerge, nums)
+	MergeSort(IntSlice(numsMerge))
+	fmt.Println("Merge Sort2\t", numsMerge)
 }
