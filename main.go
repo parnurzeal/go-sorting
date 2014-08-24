@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"regexp"
 	"strconv"
@@ -93,6 +94,30 @@ func MergeSortInternal(data Interface, f, l int) {
 	return
 }
 
+func QuickSort(data Interface) {
+	rand.Seed(40)
+	QuickSortInternal(data, 0, data.Len())
+}
+
+func QuickSortInternal(data Interface, f, l int) {
+	n := l - f
+	if n <= 1 {
+		return
+	}
+	pivot := rand.Intn(n) + f
+	data.Swap(f, pivot)
+	idx := f
+	for i := f + 1; i < l; i++ {
+		if data.Less(i, f) {
+			idx++
+			data.Swap(i, idx)
+		}
+	}
+	data.Swap(f, idx)
+	QuickSortInternal(data, f, idx)
+	QuickSortInternal(data, idx+1, l)
+}
+
 type IntSlice []int
 
 func (s IntSlice) Len() int                    { return len(s) }
@@ -148,4 +173,10 @@ func main() {
 	copy(numsMerge, nums)
 	MergeSort(IntSlice(numsMerge))
 	fmt.Println("Merge Sort2\t", numsMerge)
+
+	numsQuick := make([]int, len(nums))
+	copy(numsQuick, nums)
+	QuickSort(IntSlice(numsQuick))
+	fmt.Println("Quick Sort2\t", numsQuick)
+
 }
