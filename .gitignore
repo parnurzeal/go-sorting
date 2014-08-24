@@ -21,3 +21,9 @@ _testmain.go
 
 *.exe
 *.test
+
+# ignore c output
+*.out
+
+# ignore ctag output
+tags
